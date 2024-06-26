@@ -1,0 +1,218 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <iomanip>
+#include <algorithm>
+#include <limits> 
+using namespace std;
+
+struct RecipeNode {
+    string name;
+    vector<string> ingredients;
+    RecipeNode* next;
+
+    RecipeNode(const string& n, const vector<string>& ing) : name(n), ingredients(ing), next(nullptr) {}
+};
+
+RecipeNode* initializeRecipes() {
+    RecipeNode* head = new RecipeNode("Grilled Cheese Sandwich", {"bread", "cheese", "butter"});
+    head->next = new RecipeNode("PB&J Sandwich", {"bread", "peanut butter", "jelly"});
+    head->next->next = new RecipeNode("French Toast", {"bread", "egg", "milk", "vanilla extract", "cinnamon", "butter", "syrup"});
+    head->next->next->next = new RecipeNode("Pancakes", {"flour", "milk", "egg", "butter", "sugar", "baking powder", "salt"});
+    head->next->next->next->next = new RecipeNode("Waffles", {"flour", "milk", "egg", "butter", "sugar", "baking powder", "vanilla extract", "salt"});
+    head->next->next->next->next->next = new RecipeNode("Chicken Curry", {"chicken", "curry powder", "coconut milk", "onion", "garlic", "ginger", "salt", "pepper"});
+    head->next->next->next->next->next->next = new RecipeNode("Beef Stew", {"beef", "potatoes", "carrots", "onion", "garlic", "beef broth", "salt", "pepper"});
+    head->next->next->next->next->next->next->next = new RecipeNode("Caesar Salad", {"lettuce", "croutons", "parmesan", "caesar dressing", "chicken"});
+    head->next->next->next->next->next->next->next->next = new RecipeNode("Vegetable Stir Fry", {"broccoli", "carrots", "bell pepper", "soy sauce", "ginger", "garlic"});
+    head->next->next->next->next->next->next->next->next->next = new RecipeNode("Fish Tacos", {"fish", "tortillas", "cabbage", "lime", "sour cream", "cilantro"});
+    head->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Mushroom Soup", {"mushrooms", "onion", "garlic", "butter", "flour", "chicken broth", "cream"});
+    head->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Beef Tacos", {"ground beef", "tortillas", "lettuce", "tomato", "cheese", "sour cream", "salsa"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Fried Rice", {"rice", "egg", "peas", "carrots", "soy sauce", "green onions"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Apple Pie", {"apples", "sugar", "flour", "butter", "cinnamon", "nutmeg", "pie crust"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Banana Bread", {"bananas", "flour", "sugar", "butter", "eggs", "baking soda", "salt"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Lasagna", {"lasagna noodles", "ground beef", "ricotta cheese", "mozzarella cheese", "parmesan cheese", "tomato sauce", "egg"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Chili", {"ground beef", "onion", "garlic", "tomato sauce", "kidney beans", "chili powder", "cumin"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Chicken Alfredo", {"chicken", "fettuccine", "butter", "heavy cream", "parmesan cheese", "garlic", "salt", "pepper"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Quiche", {"pie crust", "eggs", "cream", "milk", "cheese", "spinach", "salt", "pepper"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Beef Stroganoff", {"beef", "onion", "garlic", "mushrooms", "beef broth", "sour cream", "egg noodles"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("BBQ Chicken", {"chicken", "bbq sauce", "onion", "garlic", "salt", "pepper"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Pasta Primavera", {"pasta", "zucchini", "bell pepper", "tomato", "parmesan cheese", "olive oil", "garlic", "salt", "pepper"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Shrimp Scampi", {"shrimp", "garlic", "butter", "lemon", "parsley", "white wine", "salt", "pepper", "pasta"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Stuffed Peppers", {"bell peppers", "ground beef", "rice", "tomato sauce", "onion", "garlic", "cheese", "salt", "pepper"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Chicken Pot Pie", {"chicken", "pie crust", "peas", "carrots", "potatoes", "onion", "butter", "flour", "chicken broth", "milk"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Tuna Salad", {"tuna", "mayonnaise", "celery", "onion", "salt", "pepper"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Chicken Caesar Wrap", {"chicken", "lettuce", "caesar dressing", "tortilla", "parmesan cheese"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("BLT Sandwich", {"bacon", "lettuce", "tomato", "bread", "mayonnaise"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Greek Salad", {"lettuce", "tomato", "cucumber", "onion", "olives", "feta cheese", "olive oil", "vinegar"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Chicken Noodle Soup", {"chicken", "noodles", "carrots", "celery", "onion", "chicken broth", "salt", "pepper"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("French Toast", {"bread", "eggs", "milk", "cinnamon", "sugar", "butter", "maple syrup"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Garlic Bread", {"bread", "garlic", "butter", "parsley", "parmesan cheese"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Sushi", {"sushi rice", "nori", "fish", "soy sauce", "wasabi", "pickled ginger"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Pumpkin Pie", {"pumpkin puree", "sugar", "eggs", "evaporated milk", "cinnamon", "nutmeg", "ginger", "pie crust"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Lemon Bars", {"flour", "butter", "sugar", "lemon juice", "eggs", "baking powder", "salt"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Minestrone Soup", {"beans", "carrots", "celery", "onion", "garlic", "tomato", "pasta", "olive oil", "vegetable broth", "basil", "oregano"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Pesto Pasta", {"pasta", "basil", "garlic", "parmesan cheese", "olive oil", "pine nuts"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Chicken Fajitas", {"chicken", "bell peppers", "onion", "tortillas", "lime", "cumin", "chili powder"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Peach Cobbler", {"peaches", "sugar", "flour", "baking powder", "butter", "milk", "cinnamon"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Tomato Soup", {"tomatoes", "onion", "garlic", "olive oil", "chicken broth", "basil", "salt", "pepper"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Pancakes", {"flour", "milk", "eggs", "sugar", "butter"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Omelette", {"eggs", "milk", "cheese", "salt", "pepper"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Salad", {"lettuce", "tomato", "cucumber", "olive oil", "salt"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Grilled Cheese", {"bread", "cheese", "butter"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Spaghetti Bolognese", {"spaghetti", "ground beef", "tomato sauce", "onion", "garlic", "olive oil", "salt", "pepper"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Chicken Curry", {"chicken", "curry powder", "coconut milk", "onion", "garlic", "ginger", "salt", "pepper"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Beef Stew", {"beef", "potatoes", "carrots", "onion", "garlic", "beef broth", "salt", "pepper"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Caesar Salad", {"lettuce", "croutons", "parmesan", "caesar dressing", "chicken"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Vegetable Stir Fry", {"broccoli", "carrots", "bell pepper", "soy sauce", "ginger", "garlic"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Fish Tacos", {"fish", "tortillas", "cabbage", "lime", "sour cream", "cilantro"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Mushroom Soup", {"mushrooms", "onion", "garlic", "butter", "flour", "chicken broth", "cream"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Beef Tacos", {"ground beef", "tortillas", "lettuce", "tomato", "cheese", "sour cream", "salsa"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Fried Rice", {"rice", "egg", "peas", "carrots", "soy sauce", "green onions"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Apple Pie", {"apples", "sugar", "flour", "butter", "cinnamon", "nutmeg", "pie crust"});
+    head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = new RecipeNode("Banana Bread", {"bananas", "flour", "sugar", "butter", "eggs", "baking soda", "salt"});
+
+    return head;
+}
+
+void printRecipes(const RecipeNode* head) {
+    const RecipeNode* current = head;
+    while (current != nullptr) {
+        cout << "Recipe: " << current->name << endl;
+        cout << "Ingredients:" << endl;
+        for (const auto& ingredient : current->ingredients) {
+            cout << "- " << ingredient << endl;
+        }
+        cout << endl;
+        current = current->next;
+    }
+}
+
+void printMatchingRecipes(const RecipeNode* head) {
+    vector<string> userIngredients;
+    cout << "Enter the ingredients you have (one per line, blank line to finish):" << endl;
+    string ingredient;
+    while (getline(cin, ingredient) && !ingredient.empty()) {
+        userIngredients.push_back(ingredient);
+    }
+
+    if (userIngredients.empty()) {
+        cout << "No ingredients entered. Exiting." << endl;
+        return;
+    }
+
+    const RecipeNode* current = head;
+    bool foundRecipe = false;
+    while (current != nullptr) {
+        const vector<string>& recipeIngredients = current->ingredients;
+        int recipeSize = recipeIngredients.size();
+        int count = 0;
+        for (const auto& ing : userIngredients) {
+            if (find(recipeIngredients.begin(), recipeIngredients.end(), ing) != recipeIngredients.end()) {
+                count++;
+            }
+        }
+        double matchPercentage = (static_cast<double>(count) / recipeSize) * 100.0;
+
+        if (matchPercentage >= 40.0) {
+            foundRecipe = true;
+            cout << "Recipe: " << current->name << " (" << fixed << setprecision(1) << matchPercentage << "% match)" << endl;
+            cout << "Ingredients:" << endl;
+            for (const auto& ingredient : current->ingredients) {
+                cout << "- " << ingredient << endl;
+            }
+            cout << endl;
+        }
+
+        current = current->next;
+    }
+
+    if (!foundRecipe) {
+        cout << "No matching recipes found. Try with different ingredients." << endl;
+    }
+}
+
+void addRecipe(RecipeNode*& head, const string& name, const vector<string>& ingredients) {
+    RecipeNode* newRecipe = new RecipeNode(name, ingredients);
+    if (head == nullptr) {
+        head = newRecipe;
+    } else {
+        RecipeNode* current = head;
+        while (current->next != nullptr) {
+            current = current->next;
+        }
+        current->next = newRecipe;
+    }
+}
+
+void displayMenu(RecipeNode*& recipes) {
+    char choice;
+    do {
+        cout << "------ Menu ------" << endl;
+        cout << "1. View all recipes" << endl;
+        cout << "2. Add a new recipe" << endl;
+        cout << "3. Find recipes based on available ingredients" << endl;
+        cout << "4. Exit" << endl;
+        cout << "Enter your choice: ";
+
+        if (!(cin >> choice)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a number." << endl;
+            continue;
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        switch (choice) {
+            case '1':
+                cout << "---- All Recipes ----" << endl;
+                printRecipes(recipes);
+                break;
+            case '2': {
+                cout << "---- Add a New Recipe ----" << endl;
+                string name;
+                vector<string> ingredients;
+                cout << "Enter recipe name: ";
+                getline(cin, name);
+                cout << "Enter ingredients (one per line, blank line to finish):" << endl;
+                string ingredient;
+                while (getline(cin, ingredient) && !ingredient.empty()) {
+                    ingredients.push_back(ingredient);
+                }
+                addRecipe(recipes, name, ingredients);
+                cout << "Recipe added successfully!" << endl;
+                break;
+            }
+            case '3':
+                cout << "---- Find Matching Recipes ----" << endl;
+                printMatchingRecipes(recipes);
+                break;
+            case '4':
+                cout << "Exiting..." << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+                break;
+        }
+
+        cout << endl;
+    } while (choice != '4');
+}
+
+int main() {
+    RecipeNode* recipes = initializeRecipes();
+
+    cout << "Welcome to Recipe Matcher!" << endl;
+    cout << "----------------------------" << endl;
+
+    displayMenu(recipes);
+
+    // Free allocated memory for recipes
+    RecipeNode* current = recipes;
+    while (current != nullptr) {
+        RecipeNode* temp = current;
+        current = current->next;
+        delete temp;
+    }
+
+    return 0;
+}
